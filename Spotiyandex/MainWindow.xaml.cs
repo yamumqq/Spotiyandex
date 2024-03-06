@@ -276,11 +276,5 @@ namespace Spotiyandex
             NextBtn_Click(sender, e);
             if (isLoopOn) PreviousBtn_Click(sender, e);
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            PlayedSongsWindow window = new PlayedSongsWindow();
-            window.Show();
-        }
     }
 }
