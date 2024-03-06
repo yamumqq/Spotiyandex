@@ -1,0 +1,311 @@
+﻿<Window x:Class="Spotiyandex.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:Spotiyandex"
+        mc:Ignorable="d"
+        Height="500" Width="800"
+        MinHeight="500" MinWidth="600"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip"
+        Background="Transparent"
+        AllowsTransparency="True"
+>
+
+    <Border CornerRadius="10"
+            Background="#212121">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0"
+                    MouseDown="Window_MouseDown"
+                    Background="Transparent">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="14*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <TextBlock Grid.Column="0"
+                           Text="Spotiyandex"
+                           FontWeight="Bold" Foreground="#6b9080" FontSize="21" 
+                           VerticalAlignment="Center" HorizontalAlignment="Left" 
+                           Margin="10,0,0,0">
+
+                    </TextBlock>
+
+                    <Button Grid.Column="3"
+                        x:Name="CloseBtn"
+                        
+                        Background="#FFFF5858"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,5,0"
+                        Click="CloseBtn_Click"></Button>
+
+                    <Button Grid.Column="2"
+                        x:Name="MinBtn"
+                        
+                        Background="#f9ab55"  
+                        HorizontalAlignment="Right"
+                        Margin="0,0,35,0"
+                        Click="MinBtn_Click"></Button>
+
+                    <Button Grid.Column="1"
+                        x:Name="FullScreenBtn"
+                        
+                        Background="#99d98c"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,65,0"
+                        Click="FullScreenBtn_Click"></Button>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Button x:Name="OpenFolder" 
+                                   
+                                    Width="50" Height="50"
+                                    Click="OpenFolder_Click" 
+                                    HorizontalAlignment="Left"
+                                    Background="#37474F">
+
+                        <materialDesign:PackIcon 
+                                    Kind="FolderMusic" 
+                                    Height="35" Width="35"
+                                    Foreground="White"/>
+                    </Button>
+
+                    <ListBox x:Name="SongList"
+                             Grid.Row="1" SelectionChanged="SongList_SelectionChanged">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Height="50">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image x:Name = "Cover" 
+                                           Grid.Column="0"
+                                           Source="{Binding Path=Image}"/>
+
+                                    <Grid Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="6*"/>
+                                            <RowDefinition Height="5*"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0"
+                                                   Text="{Binding Path=SongName}" 
+                                                   FontSize="14" 
+                                                   Foreground="White"
+                                                   Margin="5,0,0,0"/>
+                                        <TextBlock Grid.Row="1"
+                                                   Text="{Binding Path=Artist}" 
+                                                   FontSize="12" 
+                                                   Foreground="Gray"
+                                                   Margin="5,0,0,0"/>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                </Grid>
+
+                <Border Grid.Column="0"
+                        CornerRadius="30"
+                        Margin="5,5,5,5">
+                    <Border.Background>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#fc3" Offset="0.3" />
+                            <GradientStop Color="#1ED760" Offset="0.7" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="80"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="25"/>
+                            </Grid.RowDefinitions>
+
+                            <Image x:Name="AlbumCover" 
+                                   Grid.Row="0"
+                                   Margin="20,20,30,20"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"/>
+
+                            <TextBlock x:Name="SongName"
+                                       Grid.Row="1"
+                                       Text="Song name" 
+                                       FontSize="16" 
+                                       Foreground="White"
+                                       Margin="5,0,0,0"/>
+
+                            <TextBlock x:Name="Artist"
+                                       Grid.Row="2"
+                                       Text="Artist" 
+                                       FontSize="14" 
+                                       Foreground="Gray"
+                                       Margin="5,0,0,0"/>
+                        </Grid>
+
+                        <MediaElement x:Name="Player" 
+                                      LoadedBehavior="Manual" 
+                                      MediaEnded="Player_MediaEnded" MediaOpened="Player_MediaOpened"/>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="50"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Slider x:Name="VolumeSlider" 
+                                    RenderTransformOrigin="0,0.5"
+                                    Height="51"
+                                    VerticalAlignment="Bottom"
+                                    Foreground="AntiqueWhite"
+                                    Grid.Column="1" 
+                                    Margin="44,0,-181,25" 
+                                    ValueChanged="VolumeSlider_ValueChanged">
+
+                                <Slider.RenderTransform>
+                                    <RotateTransform Angle="-90"/>
+                                </Slider.RenderTransform>
+                            </Slider>
+                            <materialDesign:PackIcon 
+                                    Grid.Column="1"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Center"
+                                    Kind="VolumeHigh" 
+                                    Height="39" Width="39"
+                                    Foreground="Yellow"/>
+                        </Grid>
+
+                        <TextBlock x:Name="EndTime"
+                                 Text="0:00"
+                                 Foreground="Yellow"
+                                 Grid.Row="1"
+                                 HorizontalAlignment="Right"
+                                 Margin="0,0,5,0"/>
+
+                        <TextBlock x:Name="StartTime"
+                                 Text="0:00"
+                                 Foreground="Yellow"
+                                 Grid.Row="1"
+                                 HorizontalAlignment="Left"
+                                 Margin="5,0,0,0"/>
+
+                        <Slider Grid.Row="2"
+                                x:Name="MediaSlider"
+                                Foreground="Yellow"
+                                VerticalAlignment="Center"
+                                Margin ="5,5,5,5" ValueChanged="MediaSlider_ValueChanged"/>
+
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button x:Name="PlayBtn" 
+                                    
+                                    Grid.Column="2" 
+                                    Width="59" Height="59"
+                                    Opacity="0.7" 
+                                    Click="PlayBtn_Click">
+
+                                <materialDesign:PackIcon 
+                                    x:Name="PlayBtnIcon"
+                                    Kind="Play" 
+                                    Height="49" Width="49"
+                                    Foreground="Yellow"/>
+                            </Button>
+
+                            <Button x:Name="PreviousBtn"
+                                    
+                                    Grid.Column="1" 
+                                    Width="45" Height="45"
+                                    Opacity="0.7" 
+                                    Click="PreviousBtn_Click">
+
+                                <materialDesign:PackIcon 
+                                    Kind="SkipPrevious" 
+                                    Height="39" Width="39"
+                                    Foreground="Yellow"/>
+                            </Button>
+
+                            <Button x:Name="NextBtn" 
+                                    
+                                    Grid.Column="3" 
+                                    Width="45" Height="45"
+                                    Opacity="0.7" 
+                                    Click="NextBtn_Click" >
+
+                                <materialDesign:PackIcon 
+                                    Kind="SkipNext" 
+                                    Height="39" Width="39"
+                                    Foreground="Yellow"/>
+                            </Button>
+
+                            <Button x:Name="ShuffleBtn"
+                                    Grid.Column="0"
+                                    Width="45" Height="45"
+                                    Opacity="0.7"
+                                    Click="ShuffleBtn_Click">
+
+                                <materialDesign:PackIcon 
+                                    x:Name="ShuffleBtnIcon"
+                                    Kind="Shuffle" 
+                                    Height="35" Width="35"
+                                    Margin="00,0,0,0"
+                                    Foreground="Gray"/>
+                            </Button>
+
+                            <Button x:Name="LoopBtn"
+                                    Grid.Column="4"
+                                    Width="45" Height="45"
+                                    Opacity="0.7"
+                                    Click="LoopBtn_Click">
+
+                                <materialDesign:PackIcon 
+                                    x:Name="LoopBtnIcon"
+                                    Kind="Loop" 
+                                    Height="35" Width="35"
+                                    Margin="00,0,0,0"
+                                    Foreground="Gray"/>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
